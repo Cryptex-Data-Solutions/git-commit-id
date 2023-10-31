@@ -37,6 +37,7 @@ To integrate the Git Commit ID plugin into your projects github action, follow t
             fetch-tags: 'true'
             fetch-depth: '0'
         - name: Generate Git Commit ID
+            id: git-commit-id
             uses: cryptex-data-solutions/git-commit-id@v1
         
 
