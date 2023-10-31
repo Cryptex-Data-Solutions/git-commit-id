@@ -47,4 +47,5 @@ runs:
         echo "version_string=$version_string" >> $GITHUB_OUTPUT
 
     - name: Display Version String
-      run: echo "Version String: ${{ steps.version_string.outputs.version_string }}"
+      run: |
+        echo "Version String: ${{ steps.version_string.outputs.version_string }}"
