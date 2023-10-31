@@ -38,12 +38,11 @@ runs:
       shell: bash
       id: version_string
       run: |
-        org_name="${{ github.repository_owner }}"
         org_repo="${{ github.repository }}"
         latest_tag="${{ steps.latest_tag.outputs.latest_tag }}"
         commits_since_tag="${{ steps.commits_since_tag.outputs.commits_since_tag }}"
         short_commit_hash="${{ steps.short_commit_hash.outputs.short_commit_hash }}"
-        version_string="${org_name}\${org_repo}:${latest_tag}-${commits_since_tag}-g${short_commit_hash}"
+        version_string="${org_repo}:${latest_tag}-${commits_since_tag}-g${short_commit_hash}"
         echo "version_string=$version_string" >> $GITHUB_OUTPUT
 
     - name: Display Version String
