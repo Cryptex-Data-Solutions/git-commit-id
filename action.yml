@@ -4,12 +4,16 @@ author: 'Bradley Goulding'
 outputs:
   version_string:
     description: 'The version string to use for the current commit'
+    value: ${{ steps.version_string.outputs.version_string }}
   latest_tag:
     description: 'The latest tag'
+    value: ${{ steps.latest_tag.outputs.latest_tag }}
   commits_since_tag:
     description: 'The number of commits since the latest tag'
+    value: ${{ steps.commits_since_tag.outputs.commits_since_tag }}
   short_commit_hash:
     description: 'The short commit hash'
+    value: ${{ steps.short_commit_hash.outputs.short_commit_hash }}
 runs:
   using: "composite"
   steps:
