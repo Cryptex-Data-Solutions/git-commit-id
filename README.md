@@ -39,6 +39,8 @@ To integrate the Git Commit ID plugin into your projects github action, follow t
         - name: Generate Git Commit ID
             id: git-commit-id
             uses: cryptex-data-solutions/git-commit-id@v1
+            with:
+                include_repo_name: 'true'
         
 
       - name: Display Git Commit ID
@@ -55,6 +57,9 @@ To integrate the Git Commit ID plugin into your projects github action, follow t
 - The action will generate a tag based on the current commit history
 - The action will return the tag as an output variable named `version_string`
     This is read as `${{ steps.git-commit-id.outputs.version_string }}`
+
+## Inputs
+- **`include_repo_name`**: Whether to include the repository name in the version string. Default: `false`
 
 ## Outputs
 
