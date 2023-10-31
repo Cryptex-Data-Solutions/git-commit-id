@@ -61,7 +61,7 @@ runs:
         fi
         if [[ "${{ inputs.prefix }}" != '' ]]; then
           version_prefix="${{ inputs.prefix }}"
-          version_string="${version_prefix}:${version_string}"
+          version_string="${version_prefix}-${version_string}"
         fi
         echo "version_string=$version_string" >> $GITHUB_OUTPUT
 
