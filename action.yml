@@ -6,6 +6,10 @@ inputs:
     description: 'Include repository name in version string'
     required: false
     default: 'false'
+  prefix:
+    description: 'Set a string to be prefixed onto the version string'
+    required: false
+    default: ''
 outputs:
   version_string:
     description: 'The version string to use for the current commit'
@@ -54,6 +58,10 @@ runs:
         if [[ "${{ inputs.include_repo_name }}" == 'true' ]]; then
           org_repo="${{ github.repository }}"
           version_string="${org_repo}:${version_string}"
+        fi
+        if [[ "${{ inputs.prefix }}" != '' ]]; then
+          version_prefix="${{ inputs.prefix }}"
+          version_string="${version_prefix}:${version_string}"
         fi
         echo "version_string=$version_string" >> $GITHUB_OUTPUT
 
