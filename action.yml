@@ -10,39 +10,38 @@ outputs:
     description: 'The number of commits since the latest tag'
   short_commit_hash:
     description: 'The short commit hash'
-branding:
-  icon: 'tag'
-  color: 'black'
 runs:
   using: "composite"
   steps:
     - name: Get Latest Tag
+      shell: bash
       id: latest_tag
       run: |
         latest_tag=$(git describe --tags --abbrev=0)
         echo "::set-output name=latest_tag::$latest_tag"
 
     - name: Get Number of Commits Since Latest Tag
+      shell: bash
       id: commits_since_tag
       run: |
         commits_since_tag=$(git rev-list ${{ steps.latest_tag.outputs.latest_tag }}..HEAD --count)
         echo "::set-output name=commits_since_tag::$commits_since_tag"
 
     - name: Get Short Commit Hash
+      shell: bash
       id: short_commit_hash
       run: |
         short_commit_hash=$(git rev-parse --short HEAD)
         echo "::set-output name=short_commit_hash::$short_commit_hash"
 
     - name: Create Version String
+      shell: bash
       id: version_string
       run: |
+        org_name="${{ github.repository_owner }}"
         org_repo="${{ github.repository }}"
         latest_tag="${{ steps.latest_tag.outputs.latest_tag }}"
         commits_since_tag="${{ steps.commits_since_tag.outputs.commits_since_tag }}"
         short_commit_hash="${{ steps.short_commit_hash.outputs.short_commit_hash }}"
-        version_string="${org_repo}:${latest_tag}-${commits_since_tag}-g${short_commit_hash}"
+        version_string="${org_name}\${org_repo}:${latest_tag}-${commits_since_tag}-g${short_commit_hash}"
         echo "::set-output name=version_string::$version_string"
-
-    - name: Display Version String
-      run: echo "Version String: ${{ steps.version_string.outputs.version_string }}"
