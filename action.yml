@@ -58,20 +58,31 @@ runs:
         latest_tag="${{ steps.latest_tag.outputs.latest_tag }}"
         commits_since_tag="${{ steps.commits_since_tag.outputs.commits_since_tag }}"
         short_commit_hash="${{ steps.short_commit_hash.outputs.short_commit_hash }}"
-        version_string="${latest_tag}-${commits_since_tag}-g${short_commit_hash}" 
+        
+        # Check if there are commits since the latest tag before adding it to the version string
+        if [[ $commits_since_tag -gt 0 ]]; then
+          version_string="${latest_tag}-${commits_since_tag}-g${short_commit_hash}"
+        else
+          version_string="${latest_tag}"
+        fi
+
+        # Add a prefix, image name, and repository name if provided
         if [[ "${{ inputs.prefix }}" != '' ]]; then
-          version_prefix="${{ inputs.prefix }}"
-          version_string="${version_prefix}-${version_string}"
+          version_string="${{ inputs.prefix }}-${version_string}"
         fi
+
         if [[ "${{ inputs.image_name }}" != '' ]]; then
-          image_name="${{ inputs.image_name }}"
-          version_string="${image_name}-${version_string}"
+          version_string="${{ inputs.image_name }}-${version_string}"
         fi
+
         if [[ "${{ inputs.include_repo_name }}" == 'true' ]]; then
           org_repo="${{ github.repository }}"
           version_string="${org_repo}-${version_string}"
         fi
+
+        # Output the version string
         echo "version_string=$version_string" >> $GITHUB_OUTPUT
+
 
     - name: Display Version String
       shell: bash
