@@ -59,7 +59,11 @@ To integrate the Git Commit ID plugin into your projects github action, follow t
     This is read as `${{ steps.git-commit-id.outputs.version_string }}`
 
 ## Inputs
+
 - **`include_repo_name`**: Whether to include the repository name in the version string. Default: `false`
+- **`prefix`**: Set a string to be prefixed onto the version string. Default: `''`
+- **`image_name`**: Set the name of the image to be prefixed onto the version string. Default: `''`
+
 
 ## Outputs
 
